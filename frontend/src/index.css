@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+:root {
+    --color-primary: #047857;
+    --color-surface: #ffffff;
+    --color-muted: #6b7280;
+    --color-text: #111827;
+    --color-hover: #f0fdfa;
+    --color-hover-accent: #e0f2f1;
+}
+
+.dark {
+    --color-primary: #10b981;
+    --color-surface: #111827;
+    --color-muted: #9ca3af;
+    --color-text: #f9fafb;
+    --color-hover: #1f2937;
+    --color-hover-accent: #374151;
+}
+
+html, body {
+    height: 100%;
+    background-color: var(--color-surface);
+    color: var(--color-text);
+}
+
+.dark body {
+    background-color: var(--color-surface);
+    color: var(--color-text);
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+html {
+    scroll-behavior: smooth;
+}

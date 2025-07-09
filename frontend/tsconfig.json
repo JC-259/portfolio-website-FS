@@ -1,0 +1,20 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "declarationDir": "dist/types",
+    "emitDeclarationOnly": false,
+    "jsx": "react-jsx",
+    "lib": ["DOM", "ESNext"],
+    "module": "ESNext",
+    "outDir": "dist/types",
+    "types": ["vite/client"]
+  },
+  "include": [
+    "src/**/*", "vite.config.ts", "vite-env.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "cdk.out",
+    "frontend/dist"
+  ]
+}

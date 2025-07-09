@@ -1,0 +1,32 @@
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+Thumbs.db
+
+!cdk/jest.config.js
+*.d.ts
+node_modules
+dist
+dist-ssr
+*.local
+
+.cdk.staging
+cdk.out
+
+logs
+*.log
+npm-debug.log*
+
+.env
+
+# Build files
+frontend/**/*.js
+frontend/**/*.d.ts
+!frontend/vite-env.d.ts
+
+cdk/**/*.js
+*.tsbuildinfo
+
+# CDK test coverage
+cdk/coverage
