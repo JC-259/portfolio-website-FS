@@ -14,6 +14,7 @@ export const handler: APIGatewayProxyHandler = async () => {
   if (!username || !token) {
     return {
       statusCode: 500,
+      headers: CORS_HEADERS,
       body: JSON.stringify({ message: 'Missing GITHUB_USERNAME or GITHUB_TOKEN' })
     };
   }

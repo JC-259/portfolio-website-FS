@@ -291,8 +291,13 @@ export class PipelineStack extends cdk.Stack {
             },
         });
 
+        const artifactBucket = new s3.Bucket(this, 'ArtifactBucket', {
+          encryption: s3.BucketEncryption.S3_MANAGED,
+        });
+
         new codepipeline.Pipeline(this, 'PortfolioPipeline', {
             pipelineName: 'PortfolioFullPipeline',
+            artifactBucket,
             stages: [
                 {
                     stageName: 'Source',
