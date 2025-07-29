@@ -12,6 +12,7 @@ import getPipelineEnvs from "./utils/getPipelineEnvs";
 import * as cloudfront_origins from 'aws-cdk-lib/aws-cloudfront-origins';
 import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
 import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
+import { LogRetention, RetentionDays } from "aws-cdk-lib/aws-logs";
 
 const {
   CERTIFICATE_ARN,
@@ -45,6 +46,13 @@ export class PortfolioBackendStack extends Stack {
       visibilityTimeout: Duration.seconds(30),
     });
 
+    const attachLogRetention = (scope: Construct, lambdaFn: NodejsFunction, id: string) => {
+      new LogRetention(scope, `${id}LogRetention`, {
+        logGroupName: `/aws/lambda/${lambdaFn.functionName}`,
+        retention: RetentionDays.ONE_WEEK,
+      });
+    };
+
     // Lambda for contact form handler
     const contactLambda = new NodejsFunction(this, 'ContactHandler', {
       entry: path.join(__dirname, '../lib/handlers/contact.ts'),
@@ -65,6 +73,7 @@ export class PortfolioBackendStack extends Stack {
       description: 'Handles contact form submissions.',
       timeout: Duration.seconds(5),
     });
+    attachLogRetention(this, contactLambda, 'ContactHandler');
     contactQueue.grantSendMessages(contactLambda);
 
     // Lambda to verify captcha
@@ -85,6 +94,7 @@ export class PortfolioBackendStack extends Stack {
       description: 'Verifies captcha tokens.',
       timeout: Duration.seconds(5),
     });
+    attachLogRetention(this, verifyTurnstileLambda, 'VerifyTurnstile');
 
     const openToWorkTable = new dynamodb.Table(this, 'OpenToWorkTable', {
       tableName: OPEN_TO_WORK_TABLE_NAME,
@@ -112,6 +122,7 @@ export class PortfolioBackendStack extends Stack {
       description: 'Retrieves open to work status.',
       timeout: Duration.seconds(5),
     });
+    attachLogRetention(this, getOpenToWorkLambda, 'GetOpenToWork');
 
     // Lambda to set open to work status
     const setOpenToWorkLambda = new NodejsFunction(this, 'SetOpenToWork', {
@@ -132,6 +143,7 @@ export class PortfolioBackendStack extends Stack {
       description: 'Sets open to work status.',
       timeout: Duration.seconds(5),
     });
+    attachLogRetention(this, setOpenToWorkLambda, 'SetOpenToWork');
 
     const dynamoPolicy = new iam.PolicyStatement({
       actions: ['dynamodb:GetItem', 'dynamodb:PutItem'],
@@ -160,6 +172,7 @@ export class PortfolioBackendStack extends Stack {
       description: 'Sends emails from SQS messages.',
       timeout: Duration.seconds(5),
     });
+    attachLogRetention(this, sendEmailsLambda, 'SendEmails');
     sendEmailsLambda.addEventSource(new eventsources.SqsEventSource(contactQueue));
     sendEmailsLambda.addToRolePolicy(new iam.PolicyStatement({
       actions: ['ses:SendEmail', 'ses:SendRawEmail'],
@@ -184,6 +197,7 @@ export class PortfolioBackendStack extends Stack {
       description: 'Fetches portfolio projects from GitHub',
       timeout: Duration.seconds(10),
     });
+    attachLogRetention(this, getGithubProjectsLambda, 'GetGithubProjects');
 
     // API Gateway
     const api = new apigateway.RestApi(this, 'PortfolioApi', {

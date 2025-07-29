@@ -21,9 +21,9 @@ const Footer = () => {
 
                     <div className="w-px bg-[var(--color-footer-divider)] mx-6 hidden md:block h-full" />
 
-                    <div className="text-center md:text-left md:w-1/3">
+                    <div className="text-center md:text-right md:ml-auto md:w-1/3">
                         <h4 className="font-semibold mb-4">Get in Touch</h4>
-                        <div className="flex space-x-6 text-2xl justify-center md:justify-start">
+                        <div className="flex space-x-6 text-2xl justify-center md:justify-end">
                             {socialLinks.map(({ href, icon, label }) => (
                                 <a
                                     key={label}

@@ -286,7 +286,8 @@ export class PipelineStack extends cdk.Stack {
                     PORTFOLIO_WEBSITE_BUCKET: { value: envVars.PORTFOLIO_WEBSITE_BUCKET },
                     GITHUB_USERNAME: { value: pipelineEnvVars.GITHUB_USERNAME },
                     GITHUB_REPO: { value: pipelineEnvVars.GITHUB_REPO },
-                    GITHUB_BRANCH: { value: pipelineEnvVars.GITHUB_BRANCH }
+                    GITHUB_BRANCH: { value: pipelineEnvVars.GITHUB_BRANCH },
+                    GITHUB_TOKEN_SECRET_NAME: { value: pipelineEnvVars.GITHUB_TOKEN_SECRET_NAME },
                 },
             },
         });
