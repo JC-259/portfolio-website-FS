@@ -10,15 +10,22 @@ const Home = () => {
 
     const handleDownload = async () => {
         setDownloading(true);
-        toast.info('Requesting CV...');
+        const toastId = toast.loading('Preparing your CV...');
 
         try {
             window.location.href = cvUrl;
         } catch (error) {
             console.error(error);
-            toast.error('Unable to open CV. Please check your popup blocker.');
+            toast.update(toastId, {
+                render: 'Unable to open CV. Please check your popup blocker.',
+                type: 'error',
+                isLoading: false,
+                autoClose: 5000,
+            });
+            return;
         } finally {
             setDownloading(false);
+            toast.dismiss(toastId);
         }
     };
 
@@ -46,20 +53,24 @@ const Home = () => {
                         <LazyCaptcha />
                     </Suspense>
                 )}
-                {verified && (
-                    <button
-                        onClick={handleDownload}
-                        data-umami-event="Get CV button"
-                        aria-busy={downloading}
-                        className="inline-block px-4 py-2 text-sm font-semibold rounded hover:bg-emerald-700 transition"
-                        style={{
-                            backgroundColor: 'var(--color-primary)',
-                            color: 'var(--color-surface)',
-                        }}
-                    >
-                        {downloading ? 'Downloading...' : 'Get CV'}
-                    </button>
-                )}
+                <button
+                    onClick={verified ? handleDownload : undefined}
+                    disabled={!verified || downloading}
+                    data-umami-event="Get CV button"
+                    aria-busy={downloading}
+                    className="inline-block px-4 py-2 text-sm font-semibold rounded transition"
+                    style={{
+                        backgroundColor: verified ? 'var(--color-primary)' : 'var(--color-disabled)',
+                        color: 'var(--color-surface)',
+                        cursor: verified ? 'pointer' : 'not-allowed',
+                    }}
+                >
+                    {!verified
+                        ? 'Verifying...'
+                        : downloading
+                        ? 'Downloading...'
+                        : 'Get CV'}
+                </button>
             </div>
         </section>
     );

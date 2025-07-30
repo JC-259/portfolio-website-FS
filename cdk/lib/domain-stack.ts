@@ -128,7 +128,6 @@ export class DomainStack extends Stack {
         }),
       },
       additionalBehaviors: additionalBehaviours,
-      geoRestriction: cloudfront.GeoRestriction.allowlist('GB'),
       domainNames: [domainName, `www.${domainName}`],
       certificate: this.certificate,
       logBucket: logBucket,
