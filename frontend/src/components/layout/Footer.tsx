@@ -12,7 +12,7 @@ const Footer = () => {
             <div className="max-w-5xl mx-auto flex flex-col md:flex-row gap-8 text-sm items-stretch">
                 <div className="flex flex-col justify-center md:w-1/3">
                     <h4 className="text-xl font-bold mb-2">James C.</h4>
-                    <p>Backend developer focused on clean backend systems and cloud-native tooling.</p>
+                    <p>Backend software engineer specialising in Kotlin, Spring Boot, and cloud‑native AWS.</p>
                 </div>
 
                 <div className="w-px bg-[var(--color-footer-divider)] mx-6 hidden md:block" />

@@ -122,13 +122,21 @@ const Contact = () => {
                     }}
                     disabled={!verified || status === 'loading'}
                 >
-                    {status === 'loading' && (
-                        <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
-                        </svg>
-                    )}
-                    <span>{status === 'loading' ? 'Sending...' : 'Send Message'}</span>
+                    <span className="flex flex-col items-center leading-tight">
+                        <span>Send Message</span>
+                        {!verified && (
+                            <span className="flex items-center text-xs text-gray-300 mt-1">
+                                <span className="animate-spin h-4 w-4 mr-1 border-2 border-t-transparent border-surface rounded-full"></span>
+                                Verifying access...
+                            </span>
+                        )}
+                        {verified && status === 'loading' && (
+                            <span className="flex items-center text-xs text-gray-300 mt-1">
+                                <span className="animate-spin h-4 w-4 mr-1 border-2 border-t-transparent border-surface rounded-full"></span>
+                                Sending...
+                            </span>
+                        )}
+                    </span>
                 </button>
                 <p aria-live="polite" className="sr-only">
                     {status === 'loading' && 'Sending...'}

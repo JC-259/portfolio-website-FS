@@ -46,7 +46,7 @@ const Navbar = () => {
                     >
                         James C.
                     </a>
-                    <div className="relative sm:hidden">
+                    <div className="relative sm:hidden transform scale-75">
                         <ThemeToggle />
                     </div>
                 </div>
@@ -54,7 +54,7 @@ const Navbar = () => {
                     <ul className="flex gap-8 px-2 text-[var(--color-text)] dark:text-[var(--color-text-dark)]">
                         <QuickLinks currentHash={currentHash} />
                     </ul>
-                    <div className="relative hidden sm:block">
+                    <div className="relative hidden sm:block transform scale-75">
                         <ThemeToggle />
                     </div>
                 </div>

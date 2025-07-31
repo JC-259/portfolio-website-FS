@@ -1,4 +1,4 @@
-import { SiKotlin, SiSpringboot, SiTerraform, SiDocker, SiReact, SiJavascript } from 'react-icons/si';
+import { SiKotlin, SiSpringboot, SiTerraform, SiDocker, SiReact, SiTypescript } from 'react-icons/si';
 import { FaAws } from 'react-icons/fa';
 import { TbArrowsShuffle } from 'react-icons/tb';
 
@@ -9,8 +9,8 @@ const tech = [
   { name: 'Terraform', icon: SiTerraform },
   { name: 'Docker', icon: SiDocker },
   { name: 'CI/CD', icon: TbArrowsShuffle },
-  { name: 'React', icon: SiReact },
-  { name: 'JS & TS', icon: SiJavascript }
+  { name: 'React JS', icon: SiReact },
+  { name: 'JS & TS', icon: SiTypescript }
 ];
 
 const Technology = () => {
