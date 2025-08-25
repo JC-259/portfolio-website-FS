@@ -5,7 +5,7 @@ import { logger } from '../utils/logger';
 import getEnvs from '../utils/getEnvs';
 
 const API_KEY_HEADER = 'x-api-key';
-const { API_KEY, OPEN_TO_WORK_TABLE_NAME } = getEnvs();
+const { STATUS_API_KEY, OPEN_TO_WORK_TABLE_NAME } = getEnvs();
 
 const CORS_HEADERS = {
   'Content-Type': 'application/json',
@@ -14,7 +14,7 @@ const CORS_HEADERS = {
   'Access-Control-Allow-Methods': 'OPTIONS,POST',
 };
 
-if (!API_KEY) {
+if (!STATUS_API_KEY) {
   throw new Error('Missing API_KEY environment variable');
 }
 
@@ -44,7 +44,7 @@ export const handler: APIGatewayProxyHandler = async (event: any) => {
     const hdrs = event.headers || {};
     const providedKey = hdrs[API_KEY_HEADER] ?? hdrs[API_KEY_HEADER.toLowerCase()] ?? hdrs[API_KEY_HEADER.toUpperCase()];
     logger.info('Received request to update openToWork', { requestId: event.requestContext.requestId });
-    if (!providedKey || providedKey !== API_KEY) {
+    if (!providedKey || providedKey !== STATUS_API_KEY) {
       return {
         statusCode: 401,
         headers: CORS_HEADERS,
