@@ -22,6 +22,7 @@ const {
   TURNSTILE_SECRET_KEY,
   CONTACT_QUEUE_URL,
   API_KEY,
+  STATUS_API_KEY,
   CDK_DEFAULT_REGION,
   OPEN_TO_WORK_TABLE_NAME,
 } = getEnvs();
@@ -138,7 +139,7 @@ export class PortfolioBackendStack extends Stack {
       },
       environment: {
         OPEN_TO_WORK_TABLE_NAME: openToWorkTable.tableName,
-        API_KEY: API_KEY,
+        STATUS_API_KEY: STATUS_API_KEY,
       },
       description: 'Sets open to work status.',
       timeout: Duration.seconds(5),
@@ -231,6 +232,9 @@ export class PortfolioBackendStack extends Stack {
     const apiKey = api.addApiKey('PortfolioApiKey',
         { value: API_KEY }
     );
+    const adminApiKey = api.addApiKey('PortfolioAdminApiKey', {
+      value: STATUS_API_KEY,
+    });
 
     const usagePlan = api.addUsagePlan('PortfolioUsagePlan', {
       name: 'PortfolioUsagePlan',
@@ -241,6 +245,7 @@ export class PortfolioBackendStack extends Stack {
     });
 
     usagePlan.addApiKey(apiKey);
+    usagePlan.addApiKey(adminApiKey);
     usagePlan.addApiStage({
       stage: api.deploymentStage,
     });

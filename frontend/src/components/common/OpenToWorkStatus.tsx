@@ -49,7 +49,7 @@ const OpenToWorkStatus = () => {
                 <div className="w-3 h-3 rounded-full bg-emerald-500" />
                 <span>Interested in New Opportunities</span>
             </div>
-            <span className="text-xs text-[var(--color-muted)]">Leeds, UK || Surrounding Area</span>
+            <span className="text-xs text-[var(--color-muted)]">Leeds, UK | Surrounding Area's</span>
             <span className="text-xs text-[var(--color-muted)]">In-person | Hybrid | Remote</span>
         </div>
     );

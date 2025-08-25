@@ -4,6 +4,7 @@ import { logger } from './logger';
 //TODO('remove optional method for robust validation')
 const EnvSchema = z.object({
     API_KEY: z.string().default(''),
+    STATUS_API_KEY: z.string().default(''),
     CDK_DEFAULT_REGION: z.string().default(''),
     CERTIFICATE_ARN: z.string().default(''),
     CONTACT_FROM_EMAIL: z.string().email().default('example@example.com'),
@@ -26,6 +27,7 @@ export default function getEnvs() {
     try {
         const envs = EnvSchema.parse({
             API_KEY: process.env.API_KEY,
+            STATUS_API_KEY: process.env.STATUS_API_KEY,
             CDK_DEFAULT_REGION: process.env.CDK_DEFAULT_REGION,
             CERTIFICATE_ARN: process.env.CERTIFICATE_ARN,
             CONTACT_FROM_EMAIL: process.env.CONTACT_FROM_EMAIL,

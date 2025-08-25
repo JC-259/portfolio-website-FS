@@ -11,7 +11,7 @@ const CORS_HEADERS = {
   'Content-Type': 'application/json',
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'Content-Type, x-api-key',
-  'Access-Control-Allow-Methods': 'OPTIONS,GET',
+  'Access-Control-Allow-Methods': 'OPTIONS,POST',
 };
 
 if (!API_KEY) {
@@ -22,8 +22,27 @@ const dynamo = new DynamoDBClient({});
 const docClient = DynamoDBDocumentClient.from(dynamo);
 
 export const handler: APIGatewayProxyHandler = async (event: any) => {
+  // Handle CORS preflight
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 204,
+      headers: CORS_HEADERS,
+      body: '',
+    };
+  }
+
+  // Enforce POST only
+  if (event.httpMethod && event.httpMethod !== 'POST') {
+    return {
+      statusCode: 405,
+      headers: CORS_HEADERS,
+      body: JSON.stringify({ message: 'Method Not Allowed' }),
+    };
+  }
+
   try {
-    const providedKey = event.headers[API_KEY_HEADER];
+    const hdrs = event.headers || {};
+    const providedKey = hdrs[API_KEY_HEADER] ?? hdrs[API_KEY_HEADER.toLowerCase()] ?? hdrs[API_KEY_HEADER.toUpperCase()];
     logger.info('Received request to update openToWork', { requestId: event.requestContext.requestId });
     if (!providedKey || providedKey !== API_KEY) {
       return {
@@ -67,7 +86,7 @@ export const handler: APIGatewayProxyHandler = async (event: any) => {
       body: JSON.stringify({ message: 'Status updated successfully' }),
     };
   } catch (error) {
-    logger.error('Error updating openToWork', { error, requestId: event.requestContext.requestId });
+    logger.error('Error updating openToWork', { error, requestId: event?.requestContext?.requestId });
     return {
       statusCode: 500,
       headers: CORS_HEADERS,
