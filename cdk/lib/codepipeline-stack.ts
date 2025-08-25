@@ -152,6 +152,7 @@ export class PipelineStack extends cdk.Stack {
             environment: {
                 environmentVariables: {
                     API_KEY: { value: envVars.API_KEY },
+                    STATUS_API_KEY: { value: envVars.STATUS_API_KEY },
                     CDK_DEFAULT_REGION: { value: envVars.CDK_DEFAULT_REGION },
                     CERTIFICATE_ARN: { value: envVars.CERTIFICATE_ARN },
                     CONTACT_FROM_EMAIL: { value: envVars.CONTACT_FROM_EMAIL },
@@ -273,6 +274,7 @@ export class PipelineStack extends cdk.Stack {
                 buildImage: codebuild.LinuxBuildImage.STANDARD_6_0,
                 environmentVariables: {
                     API_KEY: { value: envVars.API_KEY },
+                    STATUS_API_KEY: { value: envVars.STATUS_API_KEY },
                     CDK_DEFAULT_REGION: { value: envVars.CDK_DEFAULT_REGION },
                     CERTIFICATE_ARN: { value: envVars.CERTIFICATE_ARN },
                     CONTACT_FROM_EMAIL: { value: envVars.CONTACT_FROM_EMAIL },
